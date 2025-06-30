@@ -92,48 +92,40 @@ const Navbar: React.FC = () => {
       {menuOpen && (
         <div className="md:hidden">
           <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-            <Link href="/about">
-              <a
-                onClick={closeMenu}
-                className="block text-base font-medium text-gray-700 hover:text-gray-900"
-              >
-                About
-              </a>
+            <Link
+              href="/about"
+              onClick={closeMenu}
+              className="block text-base font-medium text-gray-700 hover:text-gray-900"
+            >
+              About
             </Link>
-            <Link href="/pricing">
-              <a
-                onClick={closeMenu}
-                className="block text-base font-medium text-gray-700 hover:text-gray-900"
-              >
-                Pricing
-              </a>
+            <Link
+              href="/pricing"
+              onClick={closeMenu}
+              className="block text-base font-medium text-gray-700 hover:text-gray-900"
+            >
+              Pricing
             </Link>
-            <Link href="/contact">
-              <a
-                onClick={closeMenu}
-                className="block text-base font-medium text-gray-700 hover:text-gray-900"
-              >
+            <Link href="/contact" onClick={closeMenu}
+                className="block text-base font-medium text-gray-700 hover:text-gray-900">
+              
                 Contact
-              </a>
+              
             </Link>
           </div>
           <div className="border-t border-gray-200 pt-4 pb-3">
             <div className="space-y-1 px-2">
-              <Link href="/sign-in">
-                <a
-                  onClick={closeMenu}
-                  className="block text-base font-medium text-gray-700 hover:text-gray-900"
-                >
+              <Link href="/sign-in" onClick={closeMenu}
+                  className="block text-base font-medium text-gray-700 hover:text-gray-900">
+                
                   Log in
-                </a>
+                
               </Link>
-              <Link href="/signup">
-                <a
-                  onClick={closeMenu}
-                  className="block text-base font-medium text-gray-700 hover:text-gray-900"
-                >
+              <Link href="/signup" onClick={closeMenu}
+                  className="block text-base font-medium text-gray-700 hover:text-gray-900">
+                
                   Sign up
-                </a>
+                
               </Link>
             </div>
           </div>
@@ -144,4 +136,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-

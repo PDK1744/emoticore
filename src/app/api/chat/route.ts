@@ -21,13 +21,45 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { message, history } = await request.json();
+    const { message, history, sessionId } = await request.json();
 
     if (!message) {
       return NextResponse.json(
         { error: "Message is required" },
         { status: 400 }
       );
+    }
+
+    // Create new chat session if needed
+    let chatSessionId = sessionId;
+    if (!chatSessionId) {
+      const { data: session, error } = await supabase
+        .from("chat_sessions")
+        .insert({ user_id: user.id })
+        .select()
+        .single();
+      if (error) throw error;
+      chatSessionId = session.id;
+    }
+
+    // Store user's message
+    await supabase.from("messages").insert({
+      session_id: chatSessionId,
+      user_id: user.id,
+      content: message,
+      role: "user",
+    });
+
+    // If this is a new session, update the title based on the first message
+    if (!sessionId) {
+      // Use the first 8 words or 40 chars as the title
+      const title =
+        message.split(" ").slice(0, 8).join(" ").slice(0, 40) +
+        (message.split(" ").length > 8 ? "..." : "");
+      await supabase
+        .from("chat_sessions")
+        .update({ title })
+        .eq("id", chatSessionId);
     }
 
     // Check if OpenRouter API key is configured
@@ -116,7 +148,15 @@ Always operate from the mindset: “How can I best help this person feel seen, h
       throw new Error("No response from AI model");
     }
 
-    return NextResponse.json({ message: aiResponse });
+    // Store AI response
+    await supabase.from("messages").insert({
+      session_id: chatSessionId,
+      user_id: user.id,
+      content: aiResponse,
+      role: "assistant",
+    });
+
+    return NextResponse.json({ message: aiResponse, sessionId: chatSessionId });
   } catch (error) {
     console.error("Chat API error:", error);
 
