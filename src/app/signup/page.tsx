@@ -1,24 +1,25 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Button from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import Button from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { createClient } from "../../../utils/supabase/client";
 
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -31,10 +32,10 @@ const SignupPage: React.FC = () => {
       } else {
         // Refresh the page to let middleware handle the redirect
         // This ensures the server-side session is properly established
-        window.location.href = '/chat';
+        window.location.href = "/chat";
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError("An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -50,8 +51,11 @@ const SignupPage: React.FC = () => {
           Create a new account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link href="/sign-in" className="font-medium text-blue-600 hover:text-blue-500">
+          Or{" "}
+          <Link
+            href="/sign-in"
+            className="font-medium text-blue-600 hover:text-blue-500"
+          >
             sign in to an existing account
           </Link>
         </p>
@@ -60,7 +64,9 @@ const SignupPage: React.FC = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <Card>
           <CardHeader>
-            <CardTitle className="text-center">Get started with EmotiCore</CardTitle>
+            <CardTitle className="text-center">
+              Get started with EmotiCore
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSignup} className="space-y-6">
@@ -71,7 +77,10 @@ const SignupPage: React.FC = () => {
               )}
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Email address
                 </label>
                 <input
@@ -88,7 +97,10 @@ const SignupPage: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Password
                 </label>
                 <input
@@ -105,12 +117,8 @@ const SignupPage: React.FC = () => {
               </div>
 
               <div>
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={loading}
-                >
-                  {loading ? 'Signing up...' : 'Sign up'}
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? "Signing up..." : "Sign up"}
                 </Button>
               </div>
             </form>
@@ -122,4 +130,3 @@ const SignupPage: React.FC = () => {
 };
 
 export default SignupPage;
-
