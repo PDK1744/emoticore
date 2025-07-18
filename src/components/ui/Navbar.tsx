@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
               <span className="text-xl font-bold text-gray-900">EmotiCore</span>
             </Link>
           </div>
-          <div className="hidden md:flex md:space-x-8 md:items-center">
+          {/* <div className="hidden md:flex md:space-x-8 md:items-center">
             <Link href="/about" className="text-gray-700 hover:text-gray-900">
               About
             </Link>
@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
             <Link href="/contact" className="text-gray-700 hover:text-gray-900">
               Contact
             </Link>
-          </div>
+          </div> */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             <Link href="/sign-in">
               <Button variant="outline">Log in</Button>
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
 
       {menuOpen && (
         <div className="md:hidden">
-          <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+          {/* <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
             <Link
               href="/about"
               onClick={closeMenu}
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
                 Contact
               
             </Link>
-          </div>
+          </div> */}
           <div className="border-t border-gray-200 pt-4 pb-3">
             <div className="space-y-1 px-2">
               <Link href="/sign-in" onClick={closeMenu}

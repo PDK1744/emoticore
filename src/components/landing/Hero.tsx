@@ -40,11 +40,7 @@ const Hero: React.FC = () => {
                 Start Free Today
               </Button>
             </Link>
-            <Link href="/chat">
-              <Button variant="outline" size="lg" className="px-8 py-4">
-                Try Demo
-              </Button>
-            </Link>
+            
           </motion.div>
 
           <motion.div

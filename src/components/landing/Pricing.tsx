@@ -30,8 +30,7 @@ const pricingPlans: PricingPlan[] = [
       'Advanced AI responses',
       'Conversation memory',
       'Priority support',
-      'Mood tracking',
-      'Export conversations',
+      
     ],
     buttonText: 'Start Premium',
     priceId: process.env.NEXT_PUBLIC_STRIPE_PREMIUM_MONTHLY_PRICE_ID,

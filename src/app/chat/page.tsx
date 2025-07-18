@@ -6,6 +6,7 @@ import { Send, LogOut, User, Bot, Menu } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Sidebar from "@/components/ui/SideBar";
 import { createClient } from "../../../utils/supabase/client";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   id: string;
@@ -37,13 +38,13 @@ const ChatPage: React.FC = () => {
   const router = useRouter();
 
   const handleDeleteSession = async (id: string) => {
-  await supabase.from("chat_sessions").delete().eq("id", id);
-  setSessions((prev) => prev.filter((s) => s.id !== id));
-  // If the deleted session is active, reset to new chat
-  if (sessionId === id) {
-    handleNewChat();
-  }
-};
+    await supabase.from("chat_sessions").delete().eq("id", id);
+    setSessions((prev) => prev.filter((s) => s.id !== id));
+    // If the deleted session is active, reset to new chat
+    if (sessionId === id) {
+      handleNewChat();
+    }
+  };
 
   // Check authentication and get user
   useEffect(() => {
@@ -255,14 +256,12 @@ const ChatPage: React.FC = () => {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex items-start space-x-3 ${
-                  message.isBot ? "" : "flex-row-reverse space-x-reverse"
-                }`}
+                className={`flex items-start space-x-3 ${message.isBot ? "" : "flex-row-reverse space-x-reverse"
+                  }`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.isBot ? "bg-blue-600" : "bg-gray-600"
-                  }`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.isBot ? "bg-blue-600" : "bg-gray-600"
+                    }`}
                 >
                   {message.isBot ? (
                     <Bot className="w-5 h-5 text-white" />
@@ -271,17 +270,19 @@ const ChatPage: React.FC = () => {
                   )}
                 </div>
                 <div
-                  className={`max-w-xs lg:max-w-2xl px-4 py-3 rounded-lg ${
-                    message.isBot
+                  className={`max-w-xs lg:max-w-2xl px-4 py-3 rounded-lg ${message.isBot
                       ? "bg-white text-gray-900 border border-gray-200"
                       : "bg-blue-600 text-white"
-                  }`}
-                >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
-                  <p
-                    className={`text-xs mt-2 ${
-                      message.isBot ? "text-gray-500" : "text-blue-100"
                     }`}
+                >
+                  {message.isBot ? (
+                    <div className="text-sm leading-relaxed"><ReactMarkdown>{message.content}</ReactMarkdown></div>
+                  ) : (
+                    <p className="text-sm leading-relaxed">{message.content}</p>
+                  )}
+                  <p
+                    className={`text-xs mt-2 ${message.isBot ? "text-gray-500" : "text-blue-100"
+                      }`}
                   >
                     {message.timestamp.toLocaleTimeString([], {
                       hour: "2-digit",
